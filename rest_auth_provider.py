@@ -86,6 +86,13 @@ class RestAuthProvider(object):
                 yield store.set_profile_displayname(localpart, display_name)
             else:
                 logger.info("Display name was not set because it was not given or policy restricted it")
+
+            if "avatar_url" in profile:
+                avatar_url = profile["avatar_url"]
+                logger.info("Setting avatar_url to '%s' based on profile data", avatar_url)
+                yield store.set_profile_avatar_url(localpart, avatar_url)
+            else:
+                logger.info("Avatar url was not set because it was not given")
             
             if "three_pids" in profile:
                 logger.info("Handling 3PIDs")
